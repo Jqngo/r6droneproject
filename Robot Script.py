@@ -1,0 +1,44 @@
+import gpiozero as gpio
+import keyboard as kb
+
+#may need to run "sudo python3 robot.py" for perms
+
+motor1 = gpio.Motor(forward=4, backward =5)
+motor2 = gpio.Motor(forward=2, backward=3)
+
+
+#main loop
+try:
+    while True:
+        #ask for input
+        
+
+        if kb.is_pressed("w"):
+            motor1.forward()
+            motor2.forward()
+            print("Move forward")
+        elif kb.is_pressed("s"):
+            motor1.backward()
+            motor2.backward()
+            print("Move backward")
+        elif kb.is_pressed("a"):
+            motor1.forward()
+            motor2.backward()
+            print("Move left")
+        elif kb.is_pressed("d"):
+            motor1.backward()
+            motor2.forward()
+            print("Move right")
+        elif kb.is_pressed("e"):
+            motor1.stop()
+            motor2.stop()
+            print("Ending script")
+            break
+        else:
+            motor1.stop()
+            motor2.stop()
+            print("Stop")
+
+finally: 
+    motor1.stop()
+    motor2.stop()

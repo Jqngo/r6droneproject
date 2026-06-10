@@ -2,14 +2,15 @@
 # sudo apt update
 # sudo apt upgrade
 # sudo apt install python3-picamera
-# sudo python3 robot.py
 # pip3 install keyboard
+# sudo python3 robot.py
+
 
 import gpiozero as gpio 
 import keyboard as kb
 import picamera
 
-cam = picamera()
+cam = picamera.PiCamera()
 
 
 motor1 = gpio.Motor(forward=4, backward =5)

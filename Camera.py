@@ -1,14 +1,21 @@
-import picamera
-cam = PiCamera()
-import keyboard as kb
+#stolen from https://github.com/shillehbean
+from picamera2 import Picamera2
+import cv2
 
-while True:
-	if kb.is_pressed == "c":
-		cam.start_preview()
-		print("Starting preview")
-		
-	elif kb.is_pressed == "x":
-		cam.stop_preview()
-		print("Stopping preview")
-		break
-		
+### You can donate at https://www.buymeacoffee.com/mmshilleh 
+
+camera = Picamera2()
+camera.configure(
+    camera.create_preview_configuration(
+        main={"format": 'XRGB8888', "size": (640, 480)}
+            )
+            )
+camera.start()
+
+def generate_frames():
+    while True:
+        frame = camera.capture_array()
+        ret, buffer = cv2.imencode('.jpg', frame)
+        frame = buffer.tobytes()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
